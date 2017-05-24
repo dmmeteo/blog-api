@@ -5,9 +5,23 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView, ModelF
 from models import Post
 
 
+class PostCreateView(CreateView):
+
+
+class PostDetailView(DetailView):
+
+
 class PostListView(ListView):
     model = Post
 
     def get_queryset(self, *args, **kwargs):
         qs = super(PostListView, self).get_queryset(*args, **kwargs).order_by('-timestamp')
         return qs
+
+
+class PostUpdateView(UpdateView):
+
+
+class PostDeleteView(DeleteView):
+
+
