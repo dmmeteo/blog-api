@@ -6,9 +6,11 @@ from models import Post
 
 
 class PostCreateView(CreateView):
+    pass
 
 
 class PostDetailView(DetailView):
+    pass
 
 
 class PostListView(ListView):
@@ -20,8 +22,8 @@ class PostListView(ListView):
 
 
 class PostUpdateView(UpdateView):
+    pass
 
 
 class PostDeleteView(DeleteView):
-
-
+    pass
