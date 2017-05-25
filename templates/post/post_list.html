@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
-{% block head_title %}Posts{% endblock %}
+{% block head_title %}Post list | {{ block.super }}{% endblock %}
 
 {% block content %}
     {% for post in object_list %}
-        <h2>{{ post.title }}</h2>
+        <a href="{% url 'post_detail' post.pk %}">
+            <h2>{{ post.title }}</h2>
+        </a>
         <p>{{ post.content }}</p>
         <p>{{ post.timestamp }}</p>
     {% endfor %}

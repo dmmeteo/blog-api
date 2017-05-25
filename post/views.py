@@ -10,7 +10,7 @@ class PostCreateView(CreateView):
 
 
 class PostDetailView(DetailView):
-    pass
+    model = Post
 
 
 class PostListView(ListView):
