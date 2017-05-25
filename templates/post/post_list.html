@@ -4,7 +4,7 @@
 
 {% block content %}
     {% for post in object_list %}
-        <a href="{% url 'post_detail' post.pk %}">
+        <a href="{{ post.get_absolute_url }}">
             <h2>{{ post.title }}</h2>
         </a>
         <p>{{ post.content }}</p>

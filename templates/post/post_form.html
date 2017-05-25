@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block head_title %}New post | {{ block.super }}{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group row">
+                <label for="{{ field.name }}" class="col-2 col-form-label">{{ field.label_tag }}</label>
+                <div class="col-10">
+                    {{ field }}
+                    <div class="form-control-feedback">{{ field.errors }}</div>
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        <input class="btn btn-success" type="submit" value="Save" />
+        <a class="btn btn-default" href="{% url 'post_list' %}">Cancel</a>
+    </form>
+{% endblock %}
