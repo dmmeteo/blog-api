@@ -35,8 +35,14 @@ class PostListView(ListView):
         return qs
 
 
-class PostUpdateView(UpdateView):
-    pass
+class PostUpdateView(SuccessMessageMixin, UpdateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'post/post_form.html'
+    success_message = '%(title)s is updated'
+
+    def get_success_url(self):
+        return reverse('post_list')
 
 
 class PostDeleteView(DeleteView):
