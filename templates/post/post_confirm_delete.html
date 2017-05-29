@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    <form action="" method="post">
+    <form class="text-center m-5 p-5" action="" method="post">
         {% csrf_token %}
         <p>Are you sure you wont to delete "{{ object.title }}" post?</p>
         <input class="btn btn-danger" type="submit" value="Confirm" />

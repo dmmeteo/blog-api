@@ -18,6 +18,6 @@
             </div>
         {% endfor %}
         <input class="btn btn-success" type="submit" value="Save" />
-        <a class="btn btn-default" href="{% url 'post_list' %}">Cancel</a>
+        <a class="btn btn-default" href="{% if btn_url %}{{ btn_url }}{% else %}{% url 'post_list' %}{% endif %}">Cancel</a>
     </form>
 {% endblock %}
