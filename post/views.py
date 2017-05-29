@@ -46,4 +46,7 @@ class PostUpdateView(SuccessMessageMixin, UpdateView):
 
 
 class PostDeleteView(DeleteView):
-    pass
+    model = Post
+
+    def get_success_url(self):
+        return reverse('post_list')
