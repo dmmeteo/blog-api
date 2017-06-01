@@ -1,8 +1,7 @@
 {# TODO normal messages show/hide in right-bottom side #}
 {% if messages %}
-    <div class="container">
-        <div class="col-sm-8 col-sm-offset-2">
-            <div class="alert alert-success alert-dismissable" role="alert">
+
+            <div class="alert alert-success alert-dismissable mt-5" role="alert">
                 <button type="button" class="close" data-dismiss="alert">
                     <span aria-hidden="true">&times;</span>
                     <span class="sr-only">Close</span>
@@ -11,6 +10,5 @@
                     {{ message }} <br />
                 {% endfor %}
             </div>
-        </div>
-    </div>
+
 {% endif %}

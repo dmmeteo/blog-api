@@ -9,8 +9,7 @@ from models import Post
 from forms import PostForm
 
 
-class LoginRequiredMixin(object):  # class to login_required - best practice
-
+class LoginRequiredMixin(object):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
@@ -20,6 +19,11 @@ class PostCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = PostForm
     template_name = 'post/post_form.html'
     success_message = '%(title)s is created at %(created_at)s'
+
+    def form_valid(self, form):
+        form.instance.added_by = self.request.user
+        valid_form = super(PostCreateView, self).form_valid(form)
+        return valid_form
 
     def get_success_url(self):
         return reverse('post_list')
@@ -49,8 +53,13 @@ class PostUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'post/post_form.html'
     success_message = '%(title)s is updated'
 
+    def form_valid(self, form):
+        form.instance.last_edit_by = self.request.user
+        form_valid = super(PostUpdateView, self).form_valid(form)
+        return form_valid
+
     def get_success_url(self):
-        return reverse('post_detail', args=[self.object.pk])  # or kwargs={'pk': self.object.pk}
+        return reverse('post_detail', args=[self.object.slug])  # or kwargs={'pk': self.object.pk}
 
     def get_context_data(self, *args, **kwargs):
         context = super(PostUpdateView, self).get_context_data(*args, **kwargs)
