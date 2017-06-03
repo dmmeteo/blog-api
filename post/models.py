@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import pre_save, post_save
+from datetime import datetime
 from django.utils.text import slugify
 
 
@@ -18,18 +19,25 @@ class Post(models.Model):
     class Meta:
         ordering = ['-timestamp', '-updated']
 
-    def __unicode__(self):  # python2
-        return self.title
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            if not self.slug:
+                self.slug = slugify(
+                    '%s-%s' % (self.title, datetime.now())
+                )
 
-    def __str__(self):  # python3
-        return self.title
+        super(Post, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'slug': self.slug})
 
+    def __str__(self):
+        return self.title
 
-def pre_save_post(sender, instance, *args, **kwargs):
-    slug = slugify(instance.title)
-    instance.slug = slug
 
-pre_save.connect(pre_save_post, sender=Post)
+# bad pre_save
+# def pre_save_post(sender, instance, *args, **kwargs):
+#     pk = instance.pk
+#     slug = slugify(instance.title)
+#
+# pre_save.connect(pre_save_post, sender=Post)
