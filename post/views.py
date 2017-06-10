@@ -26,7 +26,7 @@ class PostCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return valid_form
 
     def get_success_url(self):
-        return reverse('post_list')
+        return reverse('post:list')
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(
@@ -59,7 +59,7 @@ class PostUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return form_valid
 
     def get_success_url(self):
-        return reverse('post_detail', args=[self.object.slug])  # or kwargs={'pk': self.object.pk}
+        return reverse('post:detail', args=[self.object.slug])  # or kwargs={'pk': self.object.pk}
 
     def get_context_data(self, *args, **kwargs):
         context = super(PostUpdateView, self).get_context_data(*args, **kwargs)
@@ -72,4 +72,4 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     success_message = '%(title)s is deleted'
 
     def get_success_url(self):
-        return reverse('post_list')
+        return reverse('post:list')

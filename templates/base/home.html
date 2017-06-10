@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block head_title %}Home | {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="col-4 offset-4 text-center well">
+        <a href="{% url 'post:list' %}">Articles</a>
+    </div>
+    <div class="col-4 offset-4 text-center well">
+        <a href="">Categories</a>
+    </div>
+{% endblock %}
