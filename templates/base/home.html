@@ -3,10 +3,16 @@
 {% block head_title %}Home | {{ block.super }}{% endblock %}
 
 {% block content %}
-    <div class="col-4 offset-4 text-center well">
-        <a href="{% url 'post:list' %}">Articles</a>
+
+    <div class="jumbotron">
+        <h1 class="display-3">Hello, world!</h1>
+        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{% url 'post:list' %}" role="button">Articles</a>
+            <a class="btn btn-primary btn-lg" href="{% url 'post:list' %}" role="button">Categories</a>
+        </p>
     </div>
-    <div class="col-4 offset-4 text-center well">
-        <a href="">Categories</a>
-    </div>
+
 {% endblock %}
