@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'', include('base.urls', namespace='base')),
     url(r'^post/', include('post.urls', namespace='post')),
     # url(r'^article/', include(article_urls)),
-    # url(r'^category/', include('category_urls')),
+    url(r'^category/', include('category.urls', namespace='category')),
     # url(r'^dashboard/', include('dashboard_urls')),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

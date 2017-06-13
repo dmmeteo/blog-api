@@ -1,18 +1,11 @@
-from django.core.urlresolvers import reverse
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, ModelFormMixin
+from django.views.generic import (CreateView, ListView, DetailView, UpdateView, DeleteView)
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
+from braces.views import (AjaxResponseMixin, JSONResponseMixin,
+                          LoginRequiredMixin, MessageMixin,
+                          SuperuserRequiredMixin)
 from models import Post
 from forms import PostForm
-
-
-class LoginRequiredMixin(object):
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
+from django.core.urlresolvers import reverse
 
 
 class PostCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -21,7 +14,7 @@ class PostCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_message = '%(title)s is created at %(created_at)s'
 
     def form_valid(self, form):
-        form.instance.added_by = self.request.user
+        form.instance.author = self.request.user
         valid_form = super(PostCreateView, self).form_valid(form)
         return valid_form
 
@@ -54,7 +47,7 @@ class PostUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_message = '%(title)s is updated'
 
     def form_valid(self, form):
-        form.instance.last_edit_by = self.request.user
+        form.instance.last_editor = self.request.user
         form_valid = super(PostUpdateView, self).form_valid(form)
         return form_valid
 
