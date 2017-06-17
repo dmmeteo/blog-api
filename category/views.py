@@ -32,7 +32,10 @@ class CategoryDetailView(DetailView):
 
 
 class CategoryUpdateView(LoginRequiredMixin, UpdateView):
-    pass
+    model = Category
+    form_class = CategoryForm
+    template_name = 'category/category_form.html'
+    success_message = '%(title)s is updated'
 
 
 class CategoryDeleteView(LoginRequiredMixin, DeleteView):

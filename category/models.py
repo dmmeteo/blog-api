@@ -18,6 +18,8 @@ class Category(models.Model):
             if not self.slug:
                 self.slug = slugify(self.title)
 
+        super(Category, self).save(*args, **kwargs)
+
     def get_absolute_url(self):
         return reverse('category:detail', kwargs={'slug': self.slug})
 
