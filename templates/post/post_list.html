@@ -5,16 +5,40 @@
 {% block content %}
     {% for object in object_list %}
 
-        <div class="mb-5">
-            <h2 id="{{ object.slug }}">
-                {{ object.title }}
-                <a class="anchorjs-link" href="#{{ object.slug }}">f</a>
-            </h2>
-            <p class="mb-3 text-muted">
-                {{ object.timestamp|date:'M d, Y' }} by
-                <a href="#">{{ object.author }}</a>
-            </p>
-            <p>{{ object.content|linebreaks|truncatewords:60 }} <a href="{{ object.get_absolute_url }}">read more</a></p>
+{#        <div class="mb-5">#}
+{#            <h2 id="{{ object.slug }}">#}
+{#                {{ object.title }}#}
+{#                <a class="anchorjs-link" href="#{{ object.slug }}">f</a>#}
+{#            </h2>#}
+{#            <p class="mb-3 text-muted">#}
+{#                {{ object.timestamp|date:'M d, Y' }} by#}
+{#                <a href="#">{{ object.author }}</a>#}
+{#            </p>#}
+{#            <p>{{ object.content|linebreaks|truncatewords:60 }} <a href="{{ object.get_absolute_url }}">read more</a></p>#}
+{#        </div>#}
+
+        <div class="card mb-3">
+            <div class="card-block">
+                <div class="row">
+                    <h4 class="card-title col-md-8">
+                        {{ object.title }}
+                        <small class="text-muted">
+                            {{ object.timestamp|date:'M d, Y' }} by <a href="#">{{ object.author }}</a>
+                        </small>
+                    </h4>
+                    <div class="col-md-4 d-flex justify-content-end align-items-start">
+                        {% if request.user.is_superuser %}
+                            <a class="btn btn-outline-warning" href="{% url 'post:update' object.slug %}">Update</a>
+                            <a class="btn btn-danger" href="{% url 'post:delete' object.slug %}">Delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-muted">
+                <p>{{ object.content|linebreaks|truncatewords:60 }}<br>
+                    <a href="{{ object.get_absolute_url }}">read more</a>
+                </p>
+            </div>
         </div>
 
     {% endfor %}

@@ -37,6 +37,9 @@ class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'category/category_form.html'
     success_message = '%(title)s is updated'
 
+    def get_success_url(self):
+        return reverse('category:list')
+
 
 class CategoryDeleteView(LoginRequiredMixin, DeleteView):
     pass
