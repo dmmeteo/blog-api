@@ -97,7 +97,7 @@ AUTH_PASSWORD_VALIDATORS = [
         }
     }
 ]
-# TODO problem with smtp "[Errno 61] Connection refused"
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  #TODO problem with smtp "[Errno 61] Connection refused"
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
@@ -129,10 +129,10 @@ USE_TZ = True
 
 # Allauth configuration
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
-ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = False  # TODO smtp settings
 
 LOGIN_URL = 'account_login'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'base:home'
 LOGOUT_REDIRECT_URL = 'account_login'
 
 SITE_ID = 1
