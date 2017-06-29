@@ -5,6 +5,7 @@ Django==1.9.13
 django-allauth==0.32.0
 django-betterforms>=1.1.4 # TODO django-betterforms
 django-braces>=1.11.0
+django-debug-toolbar==1.8 # TODO include
 django-haystack>=2.6.1 # TODO using haystack & whoosh
 idna==2.5
 oauthlib==2.0.2
@@ -14,6 +15,6 @@ python-openid==2.2.5
 requests==2.18.1
 requests-oauthlib==0.8.0
 six==1.10.0
+sqlparse==0.2.3
 urllib3==1.21.1
 # TODO postgresSQL
-# TODO install django-debug-toolbar

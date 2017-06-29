@@ -24,6 +24,7 @@ SECRET_KEY = 'q(2kbz0ty%pf1od@zd6rxz7zu0wlt8a3i+d!_o(kxs+297weaj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+DJANGO_USE_DEBUG_TOOLBAR = True
 
 ALLOWED_HOSTS = []
 
@@ -54,6 +55,8 @@ LOCAL_APPS = (
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+ADMIN_URL = r'^admin/'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -148,3 +151,24 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
     # /some/other/dir/
 )
+
+if DEBUG and DJANGO_USE_DEBUG_TOOLBAR:
+    MIDDLEWARE_CLASSES += (
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    )
+    INSTALLED_APPS += (
+        'debug_toolbar',
+    )
+    DEBUG_TOOLBAR_CONFIG = {
+        'DISABLE_PANELS': [
+            'debug_toolbar.panels.redirects.RedirectsPanel',
+            'debug_toolbar.panels.sql.SQLPanel'
+        ],
+        'SHOW_TEMPLATE_CONTEXT': True,
+        'SHOW_TOOLBAR_CALLBACK': lambda request: True,
+    }
+    
+    DEBUG_TOOLBAR_PATCH_SETTINGS = False
+    
+    # http://django-debug-toolbar.readthedocs.org/en/latest/installation.html
+    INTERNAL_IPS = ('127.0.0.1', '0.0.0.0', '10.0.2.2')
