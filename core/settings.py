@@ -162,7 +162,6 @@ if DEBUG and DJANGO_USE_DEBUG_TOOLBAR:
     DEBUG_TOOLBAR_CONFIG = {
         'DISABLE_PANELS': [
             'debug_toolbar.panels.redirects.RedirectsPanel',
-            'debug_toolbar.panels.sql.SQLPanel'
         ],
         'SHOW_TEMPLATE_CONTEXT': True,
         'SHOW_TOOLBAR_CALLBACK': lambda request: True,
