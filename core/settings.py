@@ -97,7 +97,7 @@ AUTH_PASSWORD_VALIDATORS = [
         }
     }
 ]
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  #TODO problem with smtp "[Errno 61] Connection refused"
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
