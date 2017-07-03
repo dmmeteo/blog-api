@@ -46,7 +46,7 @@ THIRD_PARTY_APPS = (
     'allauth.socialaccount',
     'allauth.socialaccount.providers.bitbucket',
     'allauth.socialaccount.providers.github',
-    'betterforms',
+    'betterforms',  # small community
 )
 
 LOCAL_APPS = (
