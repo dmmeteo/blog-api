@@ -4,5 +4,5 @@ from django.apps import AppConfig
 
 
 class UsersConfig(AppConfig):
-    name = 'blog-api.users'
+    name = 'users'
     verbose_name = 'Users'
