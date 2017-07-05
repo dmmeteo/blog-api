@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}User: {{ object.username }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {{ object.email }}<br>
+        {{ object.password }}<br>
+        permissions:
+        <ul>
+        {% for perm in object.get_all_permissions %}
+            <li>{{ perm }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock content %}
