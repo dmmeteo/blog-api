@@ -1,26 +1,66 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-import os
 # TODO environ setting(https://django-environ.readthedocs.io/en/latest/#how-to-use)
-# import environ
-# import sys
+import environ
+# import psycopg2.extensions #TODO postgreSQL
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+root = environ.Path(__file__) - 1  # (project/myfile.py - 1 = project/)
+env = environ.Env(
+    DEBUG=(bool, False),
+    DJANGO_SECRET_KEY=(str, 'some secret kay'),
+    DJANGO_ADMINS=(list, []),
+    DJANGO_ALLOWED_HOSTS=(list, []),
+    DJANGO_DATABASE_URL=(str, 'postgis:///pmtools'),
+    DJANGO_EMAIL_URL=(environ.Env.email_url_config, 'consolemail://'),
+    DJANGO_DEFAULT_FROM_EMAIL=(str, 'admin@example.com'),
+    DJANGO_EMAIL_BACKEND=(str, 'django.core.mail.backends.smtp.EmailBackend'),
+    DJANGO_SERVER_EMAIL=(str, 'root@localhost.com'),
+    
+    DJANGO_USE_DEBUG_TOOLBAR=(bool, False),
+    DJANGO_TEST_RUN=(bool, False),
+) # set default values and casting
+environ.Env.read_env() # reading .env file
 
+SITE_ROOT = root()
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'q(2kbz0ty%pf1od@zd6rxz7zu0wlt8a3i+d!_o(kxs+297weaj'
+DEBUG = env('DEBUG')
+DJANGO_USE_DEBUG_TOOLBAR = env.bool('DJANGO_USE_DEBUG_TOOLBAR')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-DJANGO_USE_DEBUG_TOOLBAR = True
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
 
-ALLOWED_HOSTS = []
+ADMINS = tuple([tuple(admins.split(':')) for admins in env.list('DJANGO_ADMINS')])
 
+MANAGERS = ADMINS
+
+# Internationalization
+# https://docs.djangoproject.com/en/1.9/topics/i18n/
+
+TIME_ZONE = 'Europe/Kiev'
+
+LANGUAGE_CODE = 'en-us'
+
+SITE_ID = 1
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
+
+# Database
+# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
+
+print SITE_ROOT.path('db.sqlite3')
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': SITE_ROOT.path('db.sqlite3'),
+    }
+}
 
 # Application definition
 DJANGO_APPS = (
@@ -65,24 +105,53 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'core.urls'
+#TODO EMAIL CONFIGURATION
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
+        'DIRS': [
+            SITE_ROOT.path('templates'),
+        ],
         'OPTIONS': {
+            'debug': DEBUG,
+            # 'loaders': [
+            #     'django.template.loaders.filesystem.Loader',
+            #     'django.template.loaders.app_directories.Loader',
+            # ],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+
+STATIC_URL = '/static/'
+STATIC_ROOT = env('DJANGO_STATIC_ROOT')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = env('DJANGO_MEDIA_ROOT')
+
+STATICFILES_DIRS = (
+    str(SITE_ROOT.path('static')),
+)
+
+ROOT_URLCONF = 'core.urls'
+
+WSGI_APPLICATION = 'core.wsgi.application'
+
+# AUTHENTICATION CONFIGURATION
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
@@ -96,35 +165,6 @@ AUTH_PASSWORD_VALIDATORS = [
         }
     }
 ]
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-WSGI_APPLICATION = 'core.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.9/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'Europe/Kiev'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
 
 # Allauth configuration
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
@@ -134,19 +174,6 @@ LOGIN_URL = 'account_login'
 LOGIN_REDIRECT_URL = 'base:home'
 LOGOUT_REDIRECT_URL = 'account_login'
 
-SITE_ID = 1
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
-
-STATIC_URL = '/static/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-    # /some/other/dir/
-)
 
 if DEBUG and DJANGO_USE_DEBUG_TOOLBAR:
     MIDDLEWARE_CLASSES += (
