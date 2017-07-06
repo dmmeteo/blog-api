@@ -1,32 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-# TODO environ setting(https://django-environ.readthedocs.io/en/latest/#how-to-use)
+# django-environ setting
+# https://django-environ.readthedocs.io/en/latest/#how-to-use
 import environ
 # import psycopg2.extensions #TODO postgreSQL
 
-root = environ.Path(__file__) - 1  # (project/myfile.py - 1 = project/)
-env = environ.Env(
-    DEBUG=(bool, False),
-    DJANGO_SECRET_KEY=(str, 'some secret kay'),
-    DJANGO_ADMINS=(list, []),
-    DJANGO_ALLOWED_HOSTS=(list, []),
-    DJANGO_DATABASE_URL=(str, 'postgis:///pmtools'),
-    DJANGO_EMAIL_URL=(environ.Env.email_url_config, 'consolemail://'),
-    DJANGO_DEFAULT_FROM_EMAIL=(str, 'admin@example.com'),
-    DJANGO_EMAIL_BACKEND=(str, 'django.core.mail.backends.smtp.EmailBackend'),
-    DJANGO_SERVER_EMAIL=(str, 'root@localhost.com'),
-    
-    DJANGO_USE_DEBUG_TOOLBAR=(bool, False),
-    DJANGO_TEST_RUN=(bool, False),
-) # set default values and casting
-environ.Env.read_env() # reading .env file
+SITE_ROOT = environ.Path(__file__) - 2 # three folder back (/a/b/c/ - 3 = /)
+env = environ.Env() # set default values and casting
+env.read_env('.env') # reading .env file
 
-SITE_ROOT = root()
+SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 
-SECRET_KEY = env('DJANGO_SECRET_KEY')
-
-DEBUG = env('DEBUG')
+DEBUG = env.bool('DJANGO_DEBUG')
 DJANGO_USE_DEBUG_TOOLBAR = env.bool('DJANGO_USE_DEBUG_TOOLBAR')
 
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
@@ -37,7 +23,6 @@ MANAGERS = ADMINS
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
-
 TIME_ZONE = 'Europe/Kiev'
 
 LANGUAGE_CODE = 'en-us'
@@ -53,12 +38,10 @@ USE_TZ = True
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-print SITE_ROOT.path('db.sqlite3')
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': SITE_ROOT.path('db.sqlite3'),
+        'NAME': SITE_ROOT('db.sqlite3'),
     }
 }
 
@@ -106,14 +89,15 @@ MIDDLEWARE_CLASSES = (
 )
 
 #TODO EMAIL CONFIGURATION
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = env.str('DJANGO_EMAIL_BACKEND')
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            SITE_ROOT.path('templates'),
+            SITE_ROOT('templates'),
         ],
+        'APP_DIRS': True,
         'OPTIONS': {
             'debug': DEBUG,
             # 'loaders': [
@@ -138,13 +122,13 @@ TEMPLATES = [
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = env('DJANGO_STATIC_ROOT')
+STATIC_ROOT = env.str('DJANGO_STATIC_ROOT')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = env('DJANGO_MEDIA_ROOT')
+MEDIA_ROOT = env.str('DJANGO_MEDIA_ROOT')
 
 STATICFILES_DIRS = (
-    str(SITE_ROOT.path('static')),
+    SITE_ROOT('static'),
 )
 
 ROOT_URLCONF = 'core.urls'
