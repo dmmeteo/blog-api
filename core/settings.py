@@ -4,7 +4,7 @@ from __future__ import absolute_import, unicode_literals
 # django-environ setting
 # https://django-environ.readthedocs.io/en/latest/#how-to-use
 import environ
-# import psycopg2.extensions #TODO postgreSQL
+import psycopg2.extensions
 
 SITE_ROOT = environ.Path(__file__) - 2 # three folder back (/a/b/c/ - 3 = /)
 env = environ.Env() # set default values and casting
@@ -37,12 +37,8 @@ USE_TZ = True
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': SITE_ROOT('db.sqlite3'),
-    }
+    'default': env.db('POSRGRES_DATABASE_URL'),
 }
 
 # Application definition
