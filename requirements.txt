@@ -1,4 +1,3 @@
-environ
 appdirs==1.4.3
 certifi==2017.4.17
 chardet==3.0.4
@@ -12,6 +11,7 @@ django-haystack>=2.6.1 # TODO using haystack & whoosh
 idna==2.5
 oauthlib==2.0.2
 packaging==16.8
+psycopg2==2.7.1
 pyparsing==2.2.0
 python-openid==2.2.5
 pytz==2017.2
@@ -21,4 +21,4 @@ six==1.10.0
 sqlparse==0.2.3
 urllib3==1.21.1
 # TODO include raven(https://docs.sentry.io/clients/python/)
-# TODO postgresSQL
+# TODO breadcrumb in templates
