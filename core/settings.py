@@ -38,7 +38,7 @@ USE_TZ = True
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 DATABASES = {
-    'default': env.db('POSRGRES_DATABASE_URL'),
+    'default': env.db('DJANGO_DATABASE_URL'),
 }
 
 # Application definition
@@ -58,7 +58,7 @@ THIRD_PARTY_APPS = (
     'allauth.socialaccount',
     'allauth.socialaccount.providers.bitbucket',
     'allauth.socialaccount.providers.github',
-    'betterforms',  # small community
+    'crispy_forms',
 )
 
 LOCAL_APPS = (
@@ -113,10 +113,12 @@ TEMPLATES = [
         },
     },
 ]
+# Crispy forms settings
+# http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-
 STATIC_URL = '/static/'
 STATIC_ROOT = env.str('DJANGO_STATIC_ROOT')
 
