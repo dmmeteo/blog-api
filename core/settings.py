@@ -56,8 +56,9 @@ THIRD_PARTY_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.bitbucket',
+    'allauth.socialaccount.providers.bitbucket_oauth2',
     'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.linkedin_oauth2',
     'crispy_forms',
 )
 

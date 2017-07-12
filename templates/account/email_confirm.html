@@ -7,7 +7,7 @@
 
 
 {% block inner %}
-<h1>{% trans "Confirm E-mail Address" %}</h1>
+<h1 class="text-center">{% trans "Confirm E-mail Address" %}</h1>
 
 {% if confirmation %}
 
@@ -15,9 +15,9 @@
 
 <p>{% blocktrans with confirmation.email_address.email as email %}Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user {{ user_display }}.{% endblocktrans %}</p>
 
-<form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+<form method="post" class="text-center" action="{% url 'account_confirm_email' confirmation.key %}">
 {% csrf_token %}
-    <button class="btn btn-primary" type="submit">{% trans 'Confirm' %}</button>
+    <button class="btn btn-lg btn-primary" type="submit">{% trans 'Confirm' %}</button>
 </form>
 
 {% else %}
