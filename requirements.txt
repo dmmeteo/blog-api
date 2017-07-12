@@ -1,6 +1,7 @@
 appdirs==1.4.3
 certifi==2017.4.17
 chardet==3.0.4
+contextlib2==0.5.5
 Django==1.9.13
 django-allauth>=0.32.0
 django-crispy-forms>=1.6.1
@@ -15,10 +16,10 @@ psycopg2==2.7.1
 pyparsing==2.2.0
 python-openid==2.2.5
 pytz==2017.2
+raven>=6.1.0
 requests==2.18.1
 requests-oauthlib==0.8.0
 six==1.10.0
 sqlparse==0.2.3
 urllib3==1.21.1
-# TODO include raven(https://docs.sentry.io/clients/python/)
 # TODO breadcrumb in templates

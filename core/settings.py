@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-# django-environ setting
+# django-environ configuration
 # https://django-environ.readthedocs.io/en/latest/#how-to-use
 import environ
+import raven
 import psycopg2.extensions
 
 SITE_ROOT = environ.Path(__file__) - 2 # three folder back (/a/b/c/ - 3 = /)
@@ -35,7 +36,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Database
+# Database configuration
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 DATABASES = {
     'default': env.db('DJANGO_DATABASE_URL'),
@@ -114,7 +115,7 @@ TEMPLATES = [
         },
     },
 ]
-# Crispy forms settings
+# Crispy forms configuration
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -158,6 +159,15 @@ LOGIN_REDIRECT_URL = 'base:home'
 LOGOUT_REDIRECT_URL = 'account_login'
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+
+# Sentry configuration
+# https://docs.sentry.io/clients/python/integrations/django/
+if env('SENTRY_DSN'):
+    INSTALLED_APPS += ('raven.contrib.django.raven_compat',)
+    RAVEN_CONFIG = {
+        'dsn': env.str('SENTRY_DSN'),
+        'release': raven.fetch_git_sha(SITE_ROOT()),
+    }
 
 if DEBUG and DJANGO_USE_DEBUG_TOOLBAR:
     MIDDLEWARE_CLASSES += (
