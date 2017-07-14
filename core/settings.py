@@ -61,6 +61,8 @@ THIRD_PARTY_APPS = (
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.linkedin_oauth2',
     'crispy_forms',
+    # http://www.django-rest-framework.org/tutorial/quickstart/
+    'rest_framework',
 )
 
 LOCAL_APPS = (
