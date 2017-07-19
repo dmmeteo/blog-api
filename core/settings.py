@@ -9,7 +9,7 @@ import psycopg2.extensions
 
 SITE_ROOT = environ.Path(__file__) - 2 # three folder back (/a/b/c/ - 3 = /)
 env = environ.Env() # set default values and casting
-env.read_env('.env') # reading .env file
+env.read_env() # reading .env file
 
 SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 
@@ -61,7 +61,6 @@ THIRD_PARTY_APPS = (
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.linkedin_oauth2',
     'crispy_forms',
-    # http://www.django-rest-framework.org/tutorial/quickstart/
     'rest_framework',
 )
 
@@ -190,3 +189,12 @@ if DEBUG and DJANGO_USE_DEBUG_TOOLBAR:
     
     # http://django-debug-toolbar.readthedocs.org/en/latest/installation.html
     INTERNAL_IPS = ('127.0.0.1', '0.0.0.0', '10.0.2.2')
+
+# Rest-framework configuration
+# http://www.django-rest-framework.org/tutorial/quickstart/
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+    'PAGE_SIZE': 10
+}
