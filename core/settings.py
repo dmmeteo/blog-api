@@ -66,7 +66,6 @@ THIRD_PARTY_APPS = (
 
 LOCAL_APPS = (
     'users',
-    'base',
     'post',
     'category',
 )
@@ -156,7 +155,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True  # TODO smtp settings
 
 LOGIN_URL = 'account_login'
-LOGIN_REDIRECT_URL = 'base:home'
+LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'account_login'
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
