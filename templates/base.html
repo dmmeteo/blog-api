@@ -4,7 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block head_title %}Blog-API{% endblock %}</title>
-    {% include 'css.html' %}
+
+    {% block stilesheets %}
+        <link rel="shortcut icon" href="{% static 'icons/favicon.png' %}">
+        <link rel="stylesheet" href="{% static 'vendor/bootstrap4/css/bootstrap.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'vendor/tether/css/tether.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+    {% endblock %}
+
 </head>
 <body>
 
@@ -25,6 +33,13 @@
     </div>
 </footer>
 
-    {% include 'javascript.html' %}
+    {% block javascript %}
+        <script src="{% static 'vendor/jquery3/jquery.min.js' %}"></script>
+        <script src="{% static 'vendor/bootstrap4/js/ie10-viewport-bug-workaround.js' %}"></script>
+        <script src="{% static 'vendor/tether/js/tether.min.js' %}"></script>
+        <script src="{% static 'vendor/bootstrap4/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/base.js' %}"></script>
+    {% endblock %}
+
 </body>
 </html>

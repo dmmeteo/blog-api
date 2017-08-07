@@ -16,7 +16,7 @@ class Post(models.Model):
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)  # "auto_now_add" means initial(create) object
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='author')
     last_editor = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
-    category = models.ForeignKey(Category, related_name='category')
+    category = models.ForeignKey(Category, related_name='category')  # TODO fix save without category
 
     class Meta:
         ordering = ['-timestamp', '-updated']

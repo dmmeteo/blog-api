@@ -16,3 +16,10 @@
     </div>
 
 {% endblock %}
+
+{% block javascript %}
+    {{ block.super }}
+    <script>
+        console.log('Log under main scripts.')
+    </script>
+{% endblock %}
