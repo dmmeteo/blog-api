@@ -6,6 +6,8 @@ from braces.views import (AjaxResponseMixin, JSONResponseMixin,
 from models import Post
 from forms import PostForm
 from django.core.urlresolvers import reverse
+from rest_framework import generics
+from serializers import PostSerializer
 
 
 class PostCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -66,3 +68,8 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse('post:list')
+
+
+class PostListView(generics.ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
