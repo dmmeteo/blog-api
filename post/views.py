@@ -6,7 +6,8 @@ from braces.views import (AjaxResponseMixin, JSONResponseMixin,
 from models import Post
 from forms import PostForm
 from django.core.urlresolvers import reverse
-from rest_framework import generics
+from rest_framework import viewsets
+from rest_framework import permissions
 from serializers import PostSerializer
 
 
@@ -70,6 +71,9 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         return reverse('post:list')
 
 
-class PostListView(generics.ListAPIView):
+# API set
+class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
