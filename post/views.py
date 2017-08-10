@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from rest_framework import viewsets
 from rest_framework import permissions
 from serializers import PostSerializer
+from post.permissions import IsAuthorOrReadOnly
 
 
 class PostCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -75,5 +76,6 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsAuthorOrReadOnly)
 
